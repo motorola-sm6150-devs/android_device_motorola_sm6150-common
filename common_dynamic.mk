@@ -16,7 +16,8 @@
 
 # A/B
 AB_OTA_PARTITIONS += \
-    product
+    product \
+    system_ext
 
 ifeq ($(TARGET_IS_VAB),true)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
