@@ -45,7 +45,11 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Kernel
+ifeq ($(TARGET_IS_VAB),true)
+BOARD_BOOT_HEADER_VERSION := 3
+else
 BOARD_BOOT_HEADER_VERSION := 2
+endif
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 androidboot.usbcontroller=a600000.dwc3 swiotlb=2048 loop.max_part=7 cgroup.memory=nokmem,nosocket reboot=panic_warm
 BOARD_KERNEL_IMAGE_NAME := Image
@@ -178,7 +182,11 @@ TARGET_DISABLED_UBWC := true
 ifeq ($(PRODUCT_USE_DYNAMIC_PARTITIONS), true)
 # Metadata
 BOARD_USES_METADATA_PARTITION := true
+ifeq ($(TARGET_IS_VAB),true)
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+else
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+endif
 ifneq ($(WITH_GMS),true)
 BOARD_PRODUCTIMAGE_EXTFS_INODE_COUNT := -1
 BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 660602880
@@ -195,7 +203,11 @@ endif
 
 # Recovery
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+ifeq ($(TARGET_IS_VAB),true)
+BOARD_USES_RECOVERY_AS_BOOT := true
+else
 BOARD_INCLUDE_RECOVERY_DTBO := true
+endif
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
